@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\helpers\LanguagesHelper;
 use yii\sphinx\ActiveRecord;
 use yii\sphinx\MatchExpression;
 
@@ -30,17 +31,17 @@ final class IdxLibrary extends ActiveRecord
         $idxBooks = self::find()
             ->match(
                 (new MatchExpression())
-                    ->match(['b_title' => $param])
-                    ->orMatch(['c_title' => $param])
-                    ->orMatch(['p_name' => $param])
-                    ->orMatch(['a_name' => $param])
-                    ->orMatch(['a_surname' => $param])
-                    ->orMatch(['a_patronymic' => $param])
+                    ->match([LanguagesHelper::getCurrentAttribute('book_title') => $param])
+                    ->orMatch([LanguagesHelper::getCurrentAttribute('cat_title') => $param])
+                    ->orMatch([LanguagesHelper::getCurrentAttribute('pub_name') => $param])
+                    ->orMatch([LanguagesHelper::getCurrentAttribute('auth_name') => $param])
+                    ->orMatch([LanguagesHelper::getCurrentAttribute('auth_surname') => $param])
+                    ->orMatch([LanguagesHelper::getCurrentAttribute('auth_patronymic') => $param])
             )
             ->all();
-        $ids = array();
+        $ids = [];
         foreach ($idxBooks as $idxBook) {
-            $ids[] = $idxBook->id;
+            $ids[] = $idxBook->book_id;
         }
         return $ids;
     }

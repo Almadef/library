@@ -135,7 +135,7 @@ final class LibraryController extends Controller
             'cache_index' => [
                 'class' => 'yii\filters\PageCache',
                 'only' => ['index'],
-                'duration' => 0,
+                'duration' => 300,
                 'variations' => [
                     Yii::$app->language,
                     Yii::$app->request->get('search'),
@@ -152,7 +152,7 @@ final class LibraryController extends Controller
             'cache_favourites' => [
                 'class' => 'yii\filters\PageCache',
                 'only' => ['favourites'],
-                'duration' => 0,
+                'duration' => 300,
                 'variations' => [
                     Yii::$app->language,
                     Yii::$app->request->get('page'),
@@ -166,7 +166,7 @@ final class LibraryController extends Controller
             'cache_book' => [
                 'class' => 'yii\filters\PageCache',
                 'only' => ['book'],
-                'duration' => 0,
+                'duration' => 300,
                 'variations' => [
                     Yii::$app->language,
                     Yii::$app->request->get('book_id'),

@@ -36,7 +36,7 @@ $this->title = Yii::t('app', 'Book {name}', ['name' => $book->title]);
                                 'class' => 'btn btn-primary'
                             ]
                         );
-                        ?>
+?>
                     </div>
                     <br>
                     <div class="text-center">
@@ -56,7 +56,7 @@ $this->title = Yii::t('app', 'Book {name}', ['name' => $book->title]);
                                     'data-action' => ($book->currentUser) ? 'del' : 'add',
                                 ]
                             );
-                        ?>
+?>
                     </div>
                 </div>
                 <div class="col-8 col-sm-8">
@@ -64,32 +64,32 @@ $this->title = Yii::t('app', 'Book {name}', ['name' => $book->title]);
                         <h1><?= $book->title ?></h1>
                         <p><?= Yii::t('app', 'Author(s): {author}', ['author' => $book->getAuthorsStringLink()]) ?></p>
                         <p><?= Yii::t(
-                                'app',
-                                'Publisher: {name}',
-                                [
+                            'app',
+                            'Publisher: {name}',
+                            [
                                     'name' => Html::a(
                                         $book->publisher->name,
                                         Url::to(['library/index', 'publisher_id' => $book->publisher->id])
                                     )
                                 ]
-                            ) ?></p>
+                        ) ?></p>
                         <p><?= Yii::t(
-                                'app',
-                                'Category(ies): {category}',
-                                ['category' => $book->getCategoriesStringLink()]
-                            ) ?></p>
+                            'app',
+                            'Category(ies): {category}',
+                            ['category' => $book->getCategoriesStringLink()]
+                        ) ?></p>
                         <p><?= Yii::t('app', 'Pages: {pages}', ['pages' => $book->pages]) ?></p>
                         <p><?= Yii::t(
-                                'app',
-                                'Release date: {release}',
-                                ['release' => Yii::$app->formatter->asDate($book->release, 'php:Y m d')]
-                            ) ?></p>
+                            'app',
+                            'Release date: {release}',
+                            ['release' => Yii::$app->formatter->asDate($book->release, 'php:Y m d')]
+                        ) ?></p>
                         <p><?= Yii::t('app', 'ISBN: {isbn}', ['isbn' => $book->isbn]) ?></p>
                         <?php
                         if (isset($book->description) && $book->description !== '') : ?>
                             <h3><?= Yii::t('app', 'Description') ?></h3>
                             <p><?= $book->description ?></p>
-                        <?php
+                            <?php
                         endif; ?>
                     </div>
                 </div>

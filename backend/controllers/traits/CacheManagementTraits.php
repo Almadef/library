@@ -9,13 +9,6 @@ trait CacheManagementTraits
 {
     public function clearCache()
     {
-        if ($this->getCacheTags()) {
-            TagDependency::invalidate(Yii::$app->cache, $this->getCacheTags());
-        }
-    }
-
-    public function getCacheTags()
-    {
-        return [];
+        TagDependency::invalidate(Yii::$app->cache, ['library_index']);
     }
 }

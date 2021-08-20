@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Application requirement checker script.
  *
@@ -31,7 +32,7 @@ if (!isset($frameworkPath) || !is_dir($frameworkPath)) {
         . '<p>You need to install Yii framework via composer or adjust the framework path in file <abbr title="' . __FILE__ . '">' . basename(__FILE__) . "</abbr>.</p>\n"
         . '<p>Please refer to the <abbr title="' . dirname(dirname(dirname(__FILE__))) . "/README.md\">README</abbr> on how to install Yii.</p>\n";
     if (!empty($_SERVER['argv'])) {
-        // do not print HTML when used in console mode
+    // do not print HTML when used in console mode
         echo strip_tags($message);
     } else {
         echo $message;
@@ -41,10 +42,8 @@ if (!isset($frameworkPath) || !is_dir($frameworkPath)) {
 
 require_once $frameworkPath . '/requirements/YiiRequirementChecker.php';
 $requirementsChecker = new YiiRequirementChecker();
-
 $gdMemo = $imagickMemo = 'Either GD PHP extension with FreeType support or ImageMagick PHP extension with PNG support is required for image CAPTCHA.';
 $gdOK = $imagickOK = false;
-
 if (extension_loaded('imagick')) {
     $imagick = new Imagick();
     $imagickFormats = $imagick->queryFormats('PNG');
@@ -148,8 +147,6 @@ $requirements = array(
         'memo' => 'PHP mail SMTP server required',
     ),
 );
-
 $result = $requirementsChecker->checkYii()->check($requirements)->getResult();
 $requirementsChecker->render();
-
 exit($result['summary']['errors'] === 0 ? 0 : 1);

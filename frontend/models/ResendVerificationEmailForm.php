@@ -1,6 +1,5 @@
 <?php
 
-
 namespace frontend\models;
 
 use common\models\User;

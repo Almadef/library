@@ -21,9 +21,9 @@ $this->title = Yii::t('app', 'Home');
                 if (empty($books)) :
                     ?>
                     <h2 class="text-center"><?= Yii::t('app', 'Books not find') ?></h2>
-                <?php
+                    <?php
                 else :
-                    foreach ($books as $book):
+                    foreach ($books as $book) :
                         ?>
                         <div class="col-3 col-sm-3">
                             <div>
@@ -62,7 +62,7 @@ $this->title = Yii::t('app', 'Home');
                                 </a>
                             </div>
                         </div>
-                    <?php
+                        <?php
                     endforeach;
                 endif;
                 ?>

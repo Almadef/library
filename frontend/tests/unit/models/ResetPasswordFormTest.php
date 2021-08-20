@@ -50,5 +50,4 @@ class ResetPasswordFormTest extends Unit
         $form = new ResetPasswordForm($user['password_reset_token']);
         expect_that($form->resetPassword());
     }
-
 }

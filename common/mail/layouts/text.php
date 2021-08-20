@@ -17,4 +17,4 @@ $this->beginBody() ?>
 <?php
 $this->endBody() ?>
 <?php
-$this->endPage() ?>
+$this->endPage();

@@ -36,7 +36,8 @@
         "phpunit/phpunit": "~5.7.27 || ~6.5.5",
         "codeception/verify": "~0.5.0 || ~1.1.0",
         "symfony/browser-kit": ">=2.7 <=4.2.4",
-        "codeception/codeception": "4.1.*"
+        "codeception/codeception": "4.1.*",
+        "squizlabs/php_codesniffer": "^3.6"
     },
     "config": {
         "process-timeout": 1800,
@@ -49,5 +50,16 @@
             "type": "composer",
             "url": "https://asset-packagist.org"
         }
-    ]
+    ],
+    "scripts": {
+        "codesniffer-analysis": [
+            "./vendor/bin/phpcs --standard=PSR12 -p --ignore=*/vendor/*,*.css,*.js ./"
+        ],
+        "codesniffer-fix": [
+            "./vendor/bin/phpcbf --standard=PSR12 -p --ignore=*/vendor/*,*.css,*.js ./"
+        ],
+        "test": [
+            "./vendor/bin/codecept run"
+        ]
+    }
 }

@@ -28,7 +28,7 @@ $this->title = Yii::t('app', 'Home');
                         ['class' => 'a-no-decoration', 'style' => 'text-decoration: none;']
                     ) ?>
                 </div>
-            <?php
+                <?php
             endif; ?>
             <?php
             if (Yii::$app->user->can('viewAuthor')) : ?>
@@ -48,7 +48,7 @@ $this->title = Yii::t('app', 'Home');
                         ['class' => 'a-no-decoration', 'style' => 'text-decoration: none;']
                     ) ?>
                 </div>
-            <?php
+                <?php
             endif; ?>
             <?php
             if (Yii::$app->user->can('viewCategory')) : ?>
@@ -68,7 +68,7 @@ $this->title = Yii::t('app', 'Home');
                         ['class' => 'a-no-decoration', 'style' => 'text-decoration: none;']
                     ) ?>
                 </div>
-            <?php
+                <?php
             endif; ?>
             <?php
             if (Yii::$app->user->can('viewPublisher')) : ?>
@@ -88,7 +88,7 @@ $this->title = Yii::t('app', 'Home');
                         ['class' => 'a-no-decoration', 'style' => 'text-decoration: none;']
                     ) ?>
                 </div>
-            <?php
+                <?php
             endif; ?>
             <?php
             if (Yii::$app->user->can('viewUser')) : ?>
@@ -108,7 +108,7 @@ $this->title = Yii::t('app', 'Home');
                         ['class' => 'a-no-decoration', 'style' => 'text-decoration: none;']
                     ) ?>
                 </div>
-            <?php
+                <?php
             endif; ?>
             <?php
             if (Yii::$app->user->can('clearCache')) : ?>
@@ -128,7 +128,7 @@ $this->title = Yii::t('app', 'Home');
                         ['class' => 'a-no-decoration', 'style' => 'text-decoration: none;']
                     ) ?>
                 </div>
-            <?php
+                <?php
             endif; ?>
         </div>
     </div>

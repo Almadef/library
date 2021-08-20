@@ -98,13 +98,13 @@ use yii\widgets\ActiveForm;
     } else {
         $url = Url::toRoute(['update', 'id' => $model->id, 'fileDeleteId' => $model->fileCover->id]);
         echo '<p>' . Html::a(
-                Yii::t('app', 'Deleted cover'),
-                $url
-            ) . ' ' . Html::a(
-                Yii::t('app', 'Watch file'),
-                Yii::$app->storage->getUrl($model->fileCover->description, $model->fileCover->file_path),
-                ['target' => '_blank']
-            ) . '</p>';
+            Yii::t('app', 'Deleted cover'),
+            $url
+        ) . ' ' . Html::a(
+            Yii::t('app', 'Watch file'),
+            Yii::$app->storage->getUrl($model->fileCover->description, $model->fileCover->file_path),
+            ['target' => '_blank']
+        ) . '</p>';
     }
     ?>
 
@@ -114,13 +114,13 @@ use yii\widgets\ActiveForm;
     } else {
         $url = Url::toRoute(['update', 'id' => $model->id, 'fileDeleteId' => $model->fileBook->id]);
         echo '<p>' . Html::a(
-                Yii::t('app', 'Deleted book'),
-                $url
-            ) . ' ' . Html::a(
-                Yii::t('app', 'Watch file'),
-                Yii::$app->storage->getUrl($model->fileBook->description, $model->fileBook->file_path),
-                ['target' => '_blank']
-            ) . '</p>';
+            Yii::t('app', 'Deleted book'),
+            $url
+        ) . ' ' . Html::a(
+            Yii::t('app', 'Watch file'),
+            Yii::$app->storage->getUrl($model->fileBook->description, $model->fileBook->file_path),
+            ['target' => '_blank']
+        ) . '</p>';
     }
     ?>
 

@@ -7,7 +7,6 @@ use common\models\author\Multilang;
 use Exception;
 use yii\helpers\ArrayHelper;
 
-
 /**
  * Class Author
  * @package common\models
