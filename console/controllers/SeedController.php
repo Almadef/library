@@ -16,6 +16,7 @@ use Yii;
 use yii\console\Controller;
 use yii\helpers\Console;
 use Faker\Factory;
+use yii\caching\TagDependency;
 
 /**
  * Seed database
@@ -34,52 +35,59 @@ final class SeedController extends Controller
      */
     public function actionLibrary()
     {
-        $faker = Factory::create();
+        $fakerEn = Factory::create('en_US');
+        $fakerRu = Factory::create('ru_RU');
 
         $db = Yii::$app->db;
         $transaction = $db->beginTransaction();
         try {
+            Storage::deleteAll();
+            Book::deleteAll();
+            Publisher::deleteAll();
+            Category::deleteAll();
+            Author::deleteAll();
+
             $authors = [];
             $categories = [];
             $publishers = [];
 
             for ($i = 0; $i < self::COUNT_AUTHORS; $i++) {
                 $author = new Author();
-                $author->name_ru = $faker->name;
-                $author->name_en = $faker->name;
-                $author->surname_ru = $faker->lastName;
-                $author->surname_en = $faker->lastName;
-                $author->patronymic_ru = $faker->name;
-                $author->patronymic_en = $faker->name;
+                $author->name_ru = $fakerRu->firstName;
+                $author->name_en = $fakerEn->firstName;
+                $author->surname_ru = $fakerRu->lastName;
+                $author->surname_en = $fakerEn->lastName;
+                $author->patronymic_ru = $fakerRu->middleName;
+                $author->patronymic_en = $fakerEn->firstName;
                 $author->save();
                 $authors[] = $author;
             }
 
             for ($i = 0; $i < self::COUNT_CATEGORIES; $i++) {
                 $category = new Category();
-                $category->title_ru = $faker->word;
-                $category->title_en = $faker->word;
+                $category->title_ru = $fakerRu->colorName;
+                $category->title_en = $fakerEn->colorName;
                 $category->save();
                 $categories[] = $category;
             }
 
             for ($i = 0; $i < self::COUNT_PUBLISHERS; $i++) {
                 $publisher = new Publisher();
-                $publisher->name_ru = $faker->company;
-                $publisher->name_en = $faker->company;
+                $publisher->name_ru = $fakerRu->company;
+                $publisher->name_en = $fakerEn->company;
                 $publisher->save();
                 $publishers[] = $publisher;
             }
 
             for ($i = 0; $i < self::COUNT_BOOKS; $i++) {
                 $book = new Book();
-                $book->title_ru = $faker->word;
-                $book->title_en = $faker->word;
-                $book->release = $faker->date();
-                $book->isbn = $faker->isbn13;
-                $book->pages = $faker->randomDigitNotNull;
-                $book->description_ru = $faker->text(700);
-                $book->description_en = $faker->text(700);
+                $book->title_ru = $fakerRu->country;
+                $book->title_en = $fakerEn->country;
+                $book->release = $fakerEn->date();
+                $book->isbn = $fakerEn->isbn13;
+                $book->pages = $fakerEn->randomDigitNotNull;
+                $book->description_ru = $fakerRu->text(700);
+                $book->description_en = $fakerEn->text(700);
                 $book->link('publisher', $publishers[$this->getRandomNumberForArray(self::COUNT_PUBLISHERS)]);
                 $book->save();
 
@@ -101,7 +109,7 @@ final class SeedController extends Controller
                 $bookFile->model_id = $book->id;
                 $bookFile->model_name = Book::class;
                 $bookFile->description = StorageHelper::BOOK_BOOK_DESCRIPTION;
-                $bookFile->file_name = $faker->word . '.pdf';
+                $bookFile->file_name = $fakerEn->word . '.pdf';
                 $bookFile->file_type = 'pdf';
                 $bookFile->file_size = 133668;
                 $bookFile->file_path = '/seed/book.pdf';
@@ -111,7 +119,7 @@ final class SeedController extends Controller
                 $coverFile->model_id = $book->id;
                 $coverFile->model_name = Book::class;
                 $coverFile->description = StorageHelper::BOOK_COVER_DESCRIPTION;
-                $coverFile->file_name = $faker->word . '.png';
+                $coverFile->file_name = $fakerEn->word . '.png';
                 $coverFile->file_type = 'png';
                 $coverFile->file_size = 433668;
                 $coverFile->file_path = '/seed/book_cover.png';
@@ -119,6 +127,7 @@ final class SeedController extends Controller
             }
 
             $transaction->commit();
+            TagDependency::invalidate(Yii::$app->cache, ['library_index']);
             $this->stdout(
                 $this->ansiFormat('Success!' . PHP_EOL, Console::FG_GREEN)
             );

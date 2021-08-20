@@ -19,13 +19,9 @@
     3. `docker-compose exec php-fpm php yii migrate-rbac`;
     4. `docker-compose exec php-fpm php yii migrate`;
 
-## Запуск sphinx
+## Sphinx
 
-После заполнения контента можно его проиндексировать и запустить sphinx:
-
-1. Остановить контейнер shinx-а, если он запущен `docker-compose stop sphinx`;
-2. Запустить индексацию `docker-compose run --rm sphinx indexer --config "/opt/sphinx/conf/sphinx.conf" --all --rotate`;
-3. Запустить sphinx `docker-compose up -d sphinx`.
+После заполнения контента его можно проиндексировать `docker-compose run --rm sphinx indexer --config "/opt/sphinx/conf/sphinx.conf" --all --rotate`:
 
 ## Тестирование
 
@@ -45,5 +41,5 @@
 * `docker-compose exec php-fpm php yii user/create-admin <login> <email> <password>` - создать администратора;
 * `docker-compose exec php-fpm php yii user/create-librarian <login> <email> <password>` - создать библиотекаря;
 * `docker-compose exec php-fpm php yii seed/library` - загрузить сиды авторов, издателей, категорий и книг;
-* `docker-compose exec php-fpm php composer run-script codesniffer-analysis` - проверить форматирование кода;
-* `docker-compose exec php-fpm php composer run-script codesniffer-fix` - исправить форматирование кода.
+* `docker-compose exec php-fpm composer run-script codesniffer-analysis` - проверить форматирование кода;
+* `docker-compose exec php-fpm composer run-script codesniffer-fix` - исправить форматирование кода.

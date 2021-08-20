@@ -1,22 +1,30 @@
 source parent_source
 {
-    type			        = mysql
+    type = mysql
 
-    sql_host			    = mysql
-    sql_user			    = user
-    sql_pass			    = user123
-    sql_db		    	    = yii2-library
-    sql_port			    = 3306
+    sql_host = mysql
+    sql_user = user
+    sql_pass = user123
+    sql_db = yii2-library
+    sql_port = 3306
 
-    mysql_connect_flags		= 32 # enable compression
-    sql_query_pre		    = SET NAMES utf8
-    sql_query_pre       	= SET CHARACTER SET utf8
+    mysql_connect_flags = 32 # enable compression
+    sql_query_pre = SET NAMES utf8
+    sql_query_pre = SET CHARACTER SET utf8
 }
 
-source src_book:parent_source
+source src_library:parent_source
 {
+    sql_query_pre = SET @code_row_number := 1;
+
     sql_query = \
-        SELECT b.id, b.title, c.title, p.name, a.name, a.surname, a.patronymic \
+        SELECT @code_row_number := @code_row_number + 1 AS id, b.id as book_id, \
+        b.title_ru as book_title_ru, b.title_en as book_title_en, \
+        c.title_ru as cat_title_ru, c.title_en as cat_title_en, \
+        p.name_ru as pub_name_ru, p.name_en as pub_name_en, \
+        a.name_ru as auth_name_ru, a.name_en as auth_name_en, \
+        a.surname_ru as auth_surname_ru, a.surname_en as auth_surname_en, \
+        a.patronymic_ru as auth_patronymic_ru, a.patronymic_en as auth_patronymic_en \
         FROM `yii2-library_book` b \
         INNER JOIN `yii2-library_book_author` ba on ba.book_id = b.id \
         INNER JOIN `yii2-library_author` a on a.id = ba.author_id \
@@ -27,12 +35,19 @@ source src_book:parent_source
         c.is_deleted = 0 and \
         a.is_deleted = 0 and \
         p.is_deleted = 0
+    
+    sql_attr_uint = book_id
 }
 
-index idx_book
+index idx_library
 {
-	source			= src_book
-	path			= /opt/sphinx/data/idx_book
+	source = src_library
+    morphology = stem_enru
+    index_exact_words = 1
+    min_infix_len = 3
+    min_prefix_len = 3
+    min_word_len = 3
+	path = /opt/sphinx/data/idx_library
 }
 
 indexer
@@ -42,16 +57,16 @@ indexer
 
 searchd
 {
-	listen			= 9312
-	listen			= 9306:mysql41
-	log			    = /opt/sphinx/log/searchd.log
-	query_log		= /opt/sphinx/log/query.log
-	read_timeout	= 5
-	max_children	= 30
-	pid_file		= /opt/sphinx/log/searchd.pid
+	listen = 9312
+	listen = 9306:mysql41
+	log = /opt/sphinx/log/searchd.log
+	query_log = /opt/sphinx/log/query.log
+	read_timeout = 5
+	max_children = 30
+	pid_file = /opt/sphinx/log/searchd.pid
 	seamless_rotate	= 1
 	preopen_indexes	= 1
-	unlink_old		= 1
-	workers			= threads # for RT to work
-	binlog_path		= /opt/sphinx/data
+	unlink_old = 1
+	workers = threads # for RT to work
+	binlog_path = /opt/sphinx/data
 }
