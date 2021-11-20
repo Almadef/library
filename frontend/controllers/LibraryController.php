@@ -3,9 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Book;
-use common\models\Category;
 use common\models\IdxLibrary;
-use common\models\UserBook;
 use Yii;
 use yii\caching\TagDependency;
 use yii\data\Pagination;
@@ -17,56 +15,131 @@ use yii\web\Controller;
  */
 final class LibraryController extends Controller
 {
+    private const LIST_PAGE_SIZE = 8;
+
     /**
-     * Displays homepage.
-     *
-     * @param string|null $search
-     * @param int|null $category_id
-     * @param int|null $author_id
-     * @param int|null $publisher_id
      * @return mixed
      */
-    public function actionIndex(
-        string $search = null,
-        int $category_id = null,
-        int $author_id = null,
-        int $publisher_id = null
-    ) {
+    public function actionIndex()
+    {
         $queryBook = Book::find()
             ->isNoDeleted();
 
-        if (isset($search)) {
-            $idsBook = IdxLibrary::search($search);
-            $queryBook->byId($idsBook);
-        }
-        if (isset($category_id)) {
-            $queryBook->joinWith('categories');
-            $queryBook->andWhere(['{{%category}}.id' => $category_id]);
-        }
-        if (isset($author_id)) {
-            $queryBook->joinWith('authors');
-            $queryBook->andWhere(['{{%author}}.id' => $author_id]);
-        }
-        if (isset($publisher_id)) {
-            $queryBook->joinWith('publisher');
-            $queryBook->andWhere(['{{%publisher}}.id' => $publisher_id]);
-        }
-
-        $pages = new Pagination(['totalCount' => $queryBook->count(), 'pageSize' => 8]);
+        $pages = new Pagination(['totalCount' => $queryBook->count(), 'pageSize' => self::LIST_PAGE_SIZE]);
         $books = $queryBook->offset($pages->offset)
             ->limit($pages->limit)
             ->all();
 
-        $categories = Category::find()
-            ->isNoDeleted()
-            ->all();
-
         return $this->render(
-            'index',
+            'list',
             [
                 'pages' => $pages,
                 'books' => $books,
-                'categories' => $categories,
+            ]
+        );
+    }
+
+    /**
+     * @param int $category_id
+     * @return mixed
+     */
+    public function actionCategory(
+        int $category_id
+    ) {
+        $queryBook = Book::find()
+            ->isNoDeleted()
+            ->joinWith('categories')
+            ->andWhere(['{{%category}}.id' => $category_id]);
+
+        $pages = new Pagination(['totalCount' => $queryBook->count(), 'pageSize' => self::LIST_PAGE_SIZE]);
+        $books = $queryBook->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        return $this->render(
+            'list',
+            [
+                'pages' => $pages,
+                'books' => $books,
+            ]
+        );
+    }
+
+    /**
+     * @param int $author_id
+     * @return mixed
+     */
+    public function actionAuthor(
+        int $author_id
+    ) {
+        $queryBook = Book::find()
+            ->isNoDeleted()
+            ->joinWith('authors')
+            ->andWhere(['{{%author}}.id' => $author_id]);
+
+        $pages = new Pagination(['totalCount' => $queryBook->count(), 'pageSize' => self::LIST_PAGE_SIZE]);
+        $books = $queryBook->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        return $this->render(
+            'list',
+            [
+                'pages' => $pages,
+                'books' => $books,
+            ]
+        );
+    }
+
+    /**
+     * @param int $publisher_id
+     * @return mixed
+     */
+    public function actionPublisher(
+        int $publisher_id
+    ) {
+        $queryBook = Book::find()
+            ->isNoDeleted()
+            ->joinWith('publisher')
+            ->andWhere(['{{%publisher}}.id' => $publisher_id]);
+
+        $pages = new Pagination(['totalCount' => $queryBook->count(), 'pageSize' => self::LIST_PAGE_SIZE]);
+        $books = $queryBook->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        return $this->render(
+            'list',
+            [
+                'pages' => $pages,
+                'books' => $books,
+            ]
+        );
+    }
+
+    /**
+     * @param string $search
+     * @return mixed
+     */
+    public function actionSearch(
+        string $search
+    ) {
+        $idsBook = IdxLibrary::search($search);
+
+        $queryBook = Book::find()
+            ->isNoDeleted()
+            ->byId($idsBook);
+
+        $pages = new Pagination(['totalCount' => $queryBook->count(), 'pageSize' => self::LIST_PAGE_SIZE]);
+        $books = $queryBook->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        return $this->render(
+            'list',
+            [
+                'pages' => $pages,
+                'books' => $books,
             ]
         );
     }
@@ -76,26 +149,20 @@ final class LibraryController extends Controller
      */
     public function actionFavourites()
     {
-        $userId = Yii::$app->user->id;
         $queryBook = Book::find()
             ->joinWith('currentUser')
             ->isNoDeleted();
 
-        $pages = new Pagination(['totalCount' => $queryBook->count(), 'pageSize' => 8]);
+        $pages = new Pagination(['totalCount' => $queryBook->count(), 'pageSize' => self::LIST_PAGE_SIZE]);
         $books = $queryBook->offset($pages->offset)
             ->limit($pages->limit)
             ->all();
 
-        $categories = Category::find()
-            ->isNoDeleted()
-            ->all();
-
         return $this->render(
-            'index',
+            'list',
             [
                 'pages' => $pages,
                 'books' => $books,
-                'categories' => $categories,
             ]
         );
     }
@@ -113,15 +180,10 @@ final class LibraryController extends Controller
             ->byId($book_id)
             ->one();
 
-        $categories = Category::find()
-            ->isNoDeleted()
-            ->all();
-
         return $this->render(
             'book',
             [
                 'book' => $book,
-                'categories' => $categories,
             ]
         );
     }
@@ -134,7 +196,7 @@ final class LibraryController extends Controller
         return [
             'cache_index' => [
                 'class' => 'yii\filters\PageCache',
-                'only' => ['index'],
+                'only' => ['index', 'category', 'author', 'publisher', 'search'],
                 'duration' => 300,
                 'variations' => [
                     Yii::$app->language,

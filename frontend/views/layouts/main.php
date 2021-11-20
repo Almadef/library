@@ -36,7 +36,7 @@ $this->beginBody() ?>
 <div class="wrap">
     <?php
     $this->beginBlock('search');
-    echo Html::beginForm(Url::to(['/library']), 'get', ['class' => 'navbar-form navbar-left']);
+    echo Html::beginForm(Url::to(['/search']), 'get', ['class' => 'navbar-form navbar-left']);
     echo Html::input('text', 'search', '', ['class' => 'form-control']);
     echo Html::endForm();
     $this->endBlock();
@@ -54,7 +54,7 @@ $this->beginBody() ?>
         $menuItems[] = ['label' => Yii::t('app', 'Signup'), 'url' => ['/site/signup']];
         $menuItems[] = ['label' => Yii::t('app', 'Login'), 'url' => ['/site/login']];
     } else {
-        $menuItems[] = ['label' => Yii::t('app', 'Favourites'), 'url' => ['/library/favourites']];
+        $menuItems[] = ['label' => Yii::t('app', 'Favourites'), 'url' => ['/favourites']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

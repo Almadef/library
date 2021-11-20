@@ -69,7 +69,7 @@ $this->title = Yii::t('app', 'Book {name}', ['name' => $book->title]);
                             [
                                     'name' => Html::a(
                                         $book->publisher->name,
-                                        Url::to(['library/index', 'publisher_id' => $book->publisher->id])
+                                        Url::to(['library/publisher', 'publisher_id' => $book->publisher->id])
                                     )
                                 ]
                         ) ?></p>
