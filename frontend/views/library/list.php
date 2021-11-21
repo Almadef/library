@@ -10,8 +10,6 @@ use yii\widgets\LinkPager;
 /* @var $pages Pagination */
 /* @var $books \common\models\Book[] */
 /* @var $categories Category[] */
-
-$this->title = Yii::t('app', 'Home');
 ?>
 <div class="site-index">
     <div class="body-content">

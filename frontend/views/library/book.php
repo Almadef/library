@@ -8,8 +8,6 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $book \common\models\Book */
 /* @var $categories Category[] */
-
-$this->title = Yii::t('app', 'Book {name}', ['name' => $book->title]);
 ?>
 <div class="site-index">
     <div class="body-content">

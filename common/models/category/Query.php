@@ -38,4 +38,13 @@ final class Query extends ActiveQuery implements QuerySafeDeleteInterface
     {
         return $this->andWhere(['{{%category}}.is_deleted' => false]);
     }
+
+    /**
+     * @param $id
+     * @return Query
+     */
+    public function byId($id)
+    {
+        return $this->andWhere(['{{%category}}.id' => $id]);
+    }
 }

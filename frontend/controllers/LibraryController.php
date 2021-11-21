@@ -2,13 +2,17 @@
 
 namespace frontend\controllers;
 
+use common\models\Author;
 use common\models\Book;
+use common\models\Category;
 use common\models\IdxLibrary;
+use common\models\Publisher;
 use Yii;
 use yii\caching\TagDependency;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * LibraryController controller
@@ -22,6 +26,8 @@ final class LibraryController extends Controller
      */
     public function actionIndex()
     {
+        $this->view->title = Yii::t('app', 'Home');
+
         $queryBook = Book::find()
             ->isNoDeleted();
 
@@ -46,6 +52,26 @@ final class LibraryController extends Controller
     public function actionCategory(
         int $category_id
     ) {
+        $category = Category::find()
+            ->isNoDeleted()
+            ->byId($category_id)
+            ->one();
+
+        if (!isset($category)) {
+            throw new NotFoundHttpException('Category not found');
+        }
+
+        $this->view->title = $category->title;
+        $this->view->registerMetaTag(
+            ['name' => 'description', 'content' => Yii::t(
+                'app',
+                'Category {title}',
+                [
+                'title' => $category->title
+                ]
+            )]
+        );
+
         $queryBook = Book::find()
             ->isNoDeleted()
             ->joinWith('categories')
@@ -72,6 +98,26 @@ final class LibraryController extends Controller
     public function actionAuthor(
         int $author_id
     ) {
+        $author = Author::find()
+            ->isNoDeleted()
+            ->byId($author_id)
+            ->one();
+
+        if (!isset($author)) {
+            throw new NotFoundHttpException('Author not found');
+        }
+
+        $this->view->title = $author->fullName;
+        $this->view->registerMetaTag(
+            ['name' => 'description', 'content' => Yii::t(
+                'app',
+                'Author {fullName}',
+                [
+                'fullName' => $author->fullName
+                ]
+            )]
+        );
+
         $queryBook = Book::find()
             ->isNoDeleted()
             ->joinWith('authors')
@@ -98,6 +144,26 @@ final class LibraryController extends Controller
     public function actionPublisher(
         int $publisher_id
     ) {
+        $publisher = Publisher::find()
+            ->isNoDeleted()
+            ->byId($publisher_id)
+            ->one();
+
+        if (!isset($publisher)) {
+            throw new NotFoundHttpException('Publisher not found');
+        }
+
+        $this->view->title = $publisher->name;
+        $this->view->registerMetaTag(
+            ['name' => 'description', 'content' => Yii::t(
+                'app',
+                'Publisher {name}',
+                [
+                'name' => $publisher->name
+                ]
+            )]
+        );
+
         $queryBook = Book::find()
             ->isNoDeleted()
             ->joinWith('publisher')
@@ -124,6 +190,8 @@ final class LibraryController extends Controller
     public function actionSearch(
         string $search
     ) {
+        $this->view->title = Yii::t('app', 'Search');
+
         $idsBook = IdxLibrary::search($search);
 
         $queryBook = Book::find()
@@ -149,6 +217,8 @@ final class LibraryController extends Controller
      */
     public function actionFavourites()
     {
+        $this->view->title = Yii::t('app', 'Favourites');
+
         $queryBook = Book::find()
             ->joinWith('currentUser')
             ->isNoDeleted();
@@ -179,6 +249,22 @@ final class LibraryController extends Controller
             ->isNoDeleted()
             ->byId($book_id)
             ->one();
+
+        if (!isset($book)) {
+            throw new NotFoundHttpException('Book not found');
+        }
+
+        $this->view->title = $book->title;
+        $this->view->registerMetaTag(
+            ['name' => 'description', 'content' => Yii::t(
+                'app',
+                'Book {title} | ISBN {isbn}',
+                [
+                'title' => $book->title,
+                'isbn' => $book->isbn
+                ]
+            )]
+        );
 
         return $this->render(
             'book',
