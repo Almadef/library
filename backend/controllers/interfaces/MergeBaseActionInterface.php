@@ -19,11 +19,6 @@ interface MergeBaseActionInterface
     public function getModelClass();
 
     /**
-     * @return mixed
-     */
-    public function getCacheTags();
-
-    /**
      * @param $id
      * @return mixed
      */

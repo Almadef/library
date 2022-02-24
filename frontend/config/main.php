@@ -11,7 +11,7 @@ return [
     'id' => 'app-frontend',
     'name' => 'yii2-library',
     'basePath' => dirname(__DIR__),
-    'homeUrl' => ['/library'],
+    'homeUrl' => ['/'],
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
@@ -26,6 +26,29 @@ return [
         'session' => [
             // this is the name of the session cookie used for login on the frontend
             'name' => 'advanced-frontend',
+        ],
+        'urlManager' => [
+            'class' => 'codemix\localeurls\UrlManager',
+            'languages' => [
+                'en-us' => 'en',
+                'ru-ru' => 'ru',
+                'ru' => 'ru',
+                'en' => 'en',
+            ],
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableLanguagePersistence' => false,
+            'enableLanguageDetection' => false,
+            'rules' => [
+                '/' => 'library/index',
+                'category/<category_id:\d+>' => 'library/category',
+                'author/<author_id:\d+>' => 'library/author',
+                'publisher/<publisher_id:\d+>' => 'library/publisher',
+                'search' => 'library/search',
+                'favourites' => 'library/favourites',
+                'book/<book_id:\d+>' => 'library/book',
+                'sitemap.xml' => 'sitemap/index',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

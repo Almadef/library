@@ -66,7 +66,7 @@ final class Book extends ActiveRecord
         $authors = $this->authors;
         $return = '';
         foreach ($authors as $author) {
-            $return .= Html::a($author->fullName, Url::to(['library/index', 'author_id' => $author->id])) . ', ';
+            $return .= Html::a($author->fullName, Url::to(['library/author', 'author_id' => $author->id])) . ', ';
         }
         if ($return !== '') {
             $return = mb_substr($return, 0, -2);
@@ -83,7 +83,7 @@ final class Book extends ActiveRecord
         $categories = $this->categories;
         $return = '';
         foreach ($categories as $category) {
-            $return .= Html::a($category->title, Url::to(['library/index', 'category_id' => $category->id])) . ', ';
+            $return .= Html::a($category->title, Url::to(['library/category', 'category_id' => $category->id])) . ', ';
         }
         if ($return !== '') {
             $return = mb_substr($return, 0, -2);

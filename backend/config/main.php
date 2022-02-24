@@ -27,6 +27,21 @@ return [
             // this is the name of the session cookie used for login on the backend
             'name' => 'advanced-backend',
         ],
+        'urlManager' => [
+            'class' => 'codemix\localeurls\UrlManager',
+            'languages' => [
+                'en-us' => 'en',
+                'ru-ru' => 'ru',
+                'ru' => 'ru',
+                'en' => 'en',
+            ],
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableLanguagePersistence' => false,
+            'enableLanguageDetection' => false,
+            'rules' => [
+            ],
+        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [

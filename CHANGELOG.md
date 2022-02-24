@@ -1,3 +1,13 @@
+### Версия 1.6.0
+Изменения:
+* Разбить главную страницу на разные урлы в зависимости от входящего критерия поиска;
+* Добавить meta-тэги на все страницы;
+* Создать sitemap.xml.
+
+[Задача в GitHub](https://github.com/Almadef/yii2-library/issues/37)
+
+[Pull Request](https://github.com/Almadef/yii2-library/pull/38)
+
 ### Версия 1.5.0
 Изменения:
 * Добавил php_codesniffer;

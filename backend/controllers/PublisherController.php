@@ -59,14 +59,6 @@ final class PublisherController extends Controller implements MergeBaseActionInt
     }
 
     /**
-     * @return array
-     */
-    public function getCacheTags()
-    {
-        return ['library_index'];
-    }
-
-    /**
      * @param $id
      * @return Publisher|null
      * @throws NotFoundHttpException

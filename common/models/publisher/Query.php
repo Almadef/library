@@ -37,4 +37,13 @@ final class Query extends ActiveQuery implements QuerySafeDeleteInterface
     {
         return $this->andWhere(['{{%publisher}}.is_deleted' => false]);
     }
+
+    /**
+     * @param $id
+     * @return Query
+     */
+    public function byId($id)
+    {
+        return $this->andWhere(['{{%publisher}}.id' => $id]);
+    }
 }

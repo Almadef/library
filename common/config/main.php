@@ -28,21 +28,6 @@ return [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
-        'urlManager' => [
-            'class' => 'codemix\localeurls\UrlManager',
-            'languages' => [
-                'en-us' => 'en',
-                'ru-ru' => 'ru',
-                'ru' => 'ru',
-                'en' => 'en',
-            ],
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'enableLanguagePersistence' => false,
-            'enableLanguageDetection' => false,
-            'rules' => [
-            ],
-        ],
         'i18n' => [
             'translations' => [
                 'app*' => [

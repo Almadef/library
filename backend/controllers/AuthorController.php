@@ -59,14 +59,6 @@ final class AuthorController extends Controller implements MergeBaseActionInterf
     }
 
     /**
-     * @return array
-     */
-    public function getCacheTags()
-    {
-        return ['library_index'];
-    }
-
-    /**
      * @param $id
      * @return Author|null
      * @throws NotFoundHttpException

@@ -218,14 +218,6 @@ final class BookController extends Controller implements MergeBaseActionInterfac
     }
 
     /**
-     * @return array
-     */
-    public function getCacheTags()
-    {
-        return ['library_index'];
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function behaviors()
