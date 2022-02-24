@@ -47,6 +47,7 @@ return [
                 'search' => 'library/search',
                 'favourites' => 'library/favourites',
                 'book/<book_id:\d+>' => 'library/book',
+                'sitemap.xml' => 'sitemap/index',
             ],
         ],
         'log' => [
