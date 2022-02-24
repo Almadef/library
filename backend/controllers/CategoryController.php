@@ -59,14 +59,6 @@ final class CategoryController extends Controller implements MergeBaseActionInte
     }
 
     /**
-     * @return array
-     */
-    public function getCacheTags()
-    {
-        return ['library_index'];
-    }
-
-    /**
      * @param $id
      * @return Category|null
      * @throws NotFoundHttpException
